@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDIO ONGO | 온고지신 건축사사무소</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Grotesk:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #121212;
+            --text-color: #ffffff;
+            --text-muted: #888888;
+            --neon-color: #ccff00;
+            --neon-glow: rgba(204, 255, 0, 0.2);
+            --font-display: 'Syncopate', 'Space Grotesk', sans-serif;
+            --font-sans: 'Noto Sans KR', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #000000 0%, #111111 100%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeOutUp 1.2s cubic-bezier(0.85, 0, 0.15, 1) 3s forwards;
+        }
+
+        .intro-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            filter: grayscale(1);
+            animation: zoomEffect 4s ease-out forwards;
+        }
+
+        .intro-logo-container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .intro-logo-image {
+            width: 420px;
+            max-width: 80vw;
+            height: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease 0.5s forwards;
+            filter: drop-shadow(0 0 25px rgba(255,255,255,0.12));
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo a {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+            letter-spacing: 4px;
+        }
+
+        .logo a span {
+            color: var(--neon-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            font-family: var(--font-display);
+        }
+
+        nav ul li a:hover {
+            color: var(--neon-color);
+        }
+
+        section {
+            padding: 140px 10% 100px 10%;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        .section-title span {
+            color: var(--neon-color);
+        }
+
+        .section-subtitle {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        #motto {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            background: radial-gradient(circle at 80% 20%, var(--neon-glow) 0%, transparent 50%);
+        }
+
+        .motto-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .motto-logo {
+            width: 200px;
+            height: auto;
+        }
+
+        .motto-right {
+            border-left: 2px solid var(--neon-color);
+            padding-left: 40px;
+        }
+
+        .motto-text {
+            font-size: 1.15rem;
+            line-height: 2;
+            word-break: keep-all;
+            color: #e0e0e0;
+        }
+
+        .motto-text p {
+            margin-bottom: 25px;
+        }
+
+        #who {
+            background-color: #0f0f0f;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .member-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-color);
+            box-shadow: 0 10px 30px rgba(204, 255, 0, 0.08);
+        }
+
+        .member-photo {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .member-info {
+            padding: 35px;
+        }
+
+        .member-tag {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--neon-color);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .member-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .member-desc {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+            word-break: keep-all;
+        }
+
+        .member-details {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+        }
+
+        .member-details h4 {
+            font-size: 0.9rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .member-details ul {
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        #philosophy {
+            background-color: #0a0a0a;
+        }
+
+        .philo-intro {
+            font-size: 1.6rem;
+            max-width: 800px;
+            margin-bottom: 80px;
+            line-height: 1.8;
+            word-break: keep-all;
+        }
+
+        .philo-intro span {
+            font-family: var(--font-display);
+            display: block;
+            font-size: 1.1rem;
+            color: var(--neon-color);
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        .philo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+        }
+
+        .philo-box {
+            padding: 40px;
+            background: linear-gradient(180deg, #121212 0%, #0d0d0d 100%);
+            border-left: 3px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s;
+        }
+
+        .philo-box:hover {
+            border-left-color: var(--neon-color);
+        }
+
+        .philo-box h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .philo-box h3 span {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .philo-box p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            word-break: keep-all;
+        }
+
+        .philo-box .en-sub {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--neon-color);
+            margin-top: 12px;
+        }
+
+        #services {
+            background-color: #0f0f0f;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 100px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 40px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 320px;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            background-color: #161616;
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .service-num {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--neon-color);
+            font-weight: 700;
+        }
+
+        .service-content h3 {
+            font-size: 1.3rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .service-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            word-break: keep-all;
+        }
+
+        .service-arrow {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            align-self: flex-end;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .service-card:hover .service-arrow {
+            transform: translateX(5px);
+            color: var(--neon-color);
+        }
+
+        .process-container {
+            margin-top: 80px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 60px;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            position: relative;
+        }
+
+        .process-card {
+            position: relative;
+        }
+
+        .process-card::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .process-step-num {
+            width: 50px;
+            height: 50px;
+            background-color: var(--bg-color);
+            border: 2px solid var(--text-muted);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+        }
+
+        .process-card:hover .process-step-num {
+            border-color: var(--neon-color);
+            color: var(--neon-color);
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .process-card h4 {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .process-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            word-break: keep-all;
+        }
+
+        #works {
+            background-color: #0a0a0a;
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 10px 25px;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--neon-color);
+            color: #000000;
+            border-color: var(--neon-color);
+            font-weight: 700;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .work-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-img-wrapper {
+            width: 100%;
+            height: 700px;
+            background-color: #111;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .work-item:hover .work-img {
+            transform: scale(1.05);
+        }
+
+        .work-info {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .work-meta h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .work-meta p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .work-cat {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            color: var(--neon-color);
+            border-color: var(--neon-color);
+        }
+
+        #space {
+            background-color: #0f0f0f;
+        }
+
+        .space-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .section-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #000;
+            padding: 30px;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+        }
+
+        .diagram-floor {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .diagram-floor:hover {
+            border-color: var(--neon-color);
+            background-color: rgba(204, 255, 0, 0.02);
+        }
+
+        .floor-tag {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--neon-color);
+            font-weight: 700;
+        }
+
+        .floor-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-left: 50px;
+            margin-bottom: 5px;
+        }
+
+        .floor-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-left: 50px;
+            word-break: keep-all;
+        }
+
+        .space-image {
+            width: 100%;
+            height: auto;
+        }
+
+        #history {
+            background-color: #0a0a0a;
+        }
+
+        .history-timeline {
+            max-width: 900px;
+            margin: 50px auto 0 auto;
+            position: relative;
+        }
+
+        .history-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 120px;
+            width: 100%;
+            height: 100%;
+            border-left: 1px dashed rgba(255,255,255,0.15);
+        }
+
+        .history-row {
+            display: flex;
+            margin-bottom: 45px;
+            position: relative;
+        }
+
+        .history-year {
+            width: 100px;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neon-color);
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .history-marker {
+            position: absolute;
+            left: 116px;
+            top: 8px;
+            width: 9px;
+            height: 9px;
+            background-color: var(--bg-color);
+            border: 2px solid var(--neon-color);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .history-row:hover .history-marker {
+            background-color: var(--neon-color);
+            box-shadow: 0 0 10px var(--neon-color);
+        }
+
+        .history-content {
+            padding-left: 50px;
+        }
+
+        .history-item {
+            margin-bottom: 15px;
+        }
+
+        .history-item .month {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-right: 15px;
+            display: inline-block;
+            width: 30px;
+        }
+
+        .history-item .text {
+            font-size: 1.05rem;
+            color: #e0e0e0;
+        }
+
+        #video {
+            background-color: #0f0f0f;
+            text-align: center;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #store {
+            background-color: #0a0a0a;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 320px;
+            background-color: #ffffff;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .store-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            padding: 20px;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .store-img {
+            transform: scale(1.03);
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-cat {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--neon-color);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .product-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: #e0e0e0;
+        }
+
+        #online {
+            background-color: #0f0f0f;
+        }
+
+        .online-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .online-box {
+            background-color: var(--card-bg);
+            padding: 50px;
+            border-top: 3px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 280px;
+            transition: border-color 0.3s;
+        }
+
+        .online-box:hover {
+            border-top-color: var(--neon-color);
+        }
+
+        .online-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .online-header i {
+            font-size: 2rem;
+        }
+
+        .online-header .platform-tag {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            background-color: rgba(255,255,255,0.05);
+            padding: 5px 15px;
+        }
+
+        .online-box h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .online-box p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            word-break: keep-all;
+            flex-grow: 1;
+        }
+
+        .online-link {
+            margin-top: 30px;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--neon-color);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 1px;
+        }
+
+        #contact {
+            background-color: #0a0a0a;
+            padding-bottom: 140px;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+        }
+
+        .contact-info-side h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+
+        .contact-row i {
+            font-size: 1.3rem;
+            color: var(--neon-color);
+            margin-top: 3px;
+        }
+
+        .contact-row span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            margin-bottom: 4px;
+        }
+
+        .contact-form-side {
+            background-color: var(--card-bg);
+            padding: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 15px;
+            color: #ffffff;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--neon-color);
+        }
+
+        textarea.form-control {
+            height: 140px;
+            resize: none;
+        }
+
+        .submit-btn {
+            background-color: var(--neon-color);
+            color: #000000;
+            border: none;
+            padding: 18px 40px;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            background-color: #b3df00;
+        }
+
+        footer {
+            background-color: #050505;
+            padding: 40px 10%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        footer .footer-logo {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        @keyframes fadeOutUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100vh); visibility: hidden; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomEffect {
+            0% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes expandLine {
+            0% { width: 0; }
+            100% { width: 180px; }
+        }
+
+        @media (max-width: 1024px) {
+            .motto-wrapper, .space-wrapper, .contact-wrapper, .online-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .team-grid, .services-grid, .store-grid, .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .process-card::before { display: none; }
+            .works-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .team-grid, .services-grid, .store-grid, .process-steps {
+                grid-template-columns: 1fr;
+            }
+            .section-title { font-size: 2.5rem; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="intro-overlay">
+    <div class="intro-bg-image"></div>
+    <div class="intro-logo-container">
+        <img src="logo-white.png" alt="STUDIO ONGO" class="intro-logo-image">
+    </div>
+</div>
+
+<header>
+    <div class="logo"><a href="#">STUDIO ONGO<span>.</span></a></div>
+    <nav>
+        <ul>
+            <li><a href="#motto">Motto</a></li>
+            <li><a href="#who">Who</a></li>
+            <li><a href="#philosophy">Philosophy</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#works">Works</a></li>
+            <li><a href="#space">Space</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="motto">
+    <div class="motto-wrapper">
+         <div class="motto-left">
+            <p class="section-subtitle">Corporate Motto</p>
+            <img src="logo-white.png" alt="STUDIO ONGO Logo" class="motto-logo">
+        </div>
+        <div class="motto-right">
+            <div class="motto-text">
+                <p>‘STUDIO ONGO’는 두가지 모토로 설립된 회사입니다. 옛것을 익히고 그것을 미루어서 새것을 안다는 온고지신(溫故知新)에서 착안하여, 과거의 건축적 가치를 학습하고 이를 바탕으로 새로움을 창조한다는 의미를 담고 있습니다.</p>
+                <p>앞으로 지어진 건축물들이 지어지고 무너지는 과정을 반복하는 것이 아닌, 계속해서 지속될 수 있는 건축물(ONGOING)이 되기 위해 끊임없이 탐구하는 회사입니다.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="who">
+    <p class="section-subtitle">The Architects</p>
+    <h2 class="section-title">Who We <span>Are</span></h2>
+    <div class="team-grid">
+        <div class="member-card">
+            <img src="gyeom.png" alt="김수겸" class="member-photo">
+            <div class="member-info">
+                <span class="member-tag">DESIGNER / BARISTA</span>
+                <h3 class="member-name">김수겸</h3>
+                <p class="member-desc">건물 뿐만 아니라 관련 서적, 굿즈 등을 디자인하고 커피를 내리며 건축사 사무소가 사람들에게 어떻게 다가가야 하는지 끊임없이 연구합니다.</p>
+                <div class="member-details">
+                    <h4>BACKGROUND & CREDENTIALS</h4>
+                    <ul>
+                        <li>세종대학교 건축학과 학사 졸업</li>
+                        <li>영국 UCL Bartlett 건축학 석사 (M.Arch)</li>
+                        <li>대한민국 공인건축사 (KIRA)</li>
+                        <li>前 삼우종합건축사사무소 리모델링 본부 팀장</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <img src="yeop.png" alt="임신엽" class="member-photo">
+            <div class="member-info">
+                <span class="member-tag">ENGINEER / TALKER</span>
+                <h3 class="member-name">임신엽</h3>
+                <p class="member-desc">새로 짓지 않고 건축물을 고쳐쓰는 방법을 연구합니다. 건축물의 실존적 구축에 관해 늘 고민합니다. 그리고 대중들과 그에 관한 이야기를 나눕니다.</p>
+                <div class="member-details">
+                    <h4>BACKGROUND & CREDENTIALS</h4>
+                    <ul>
+                        <li>세종대학교 건축학과 학사 졸업</li>
+                        <li>스위스 ETH Zurich 구조공학 방문 연구원</li>
+                        <li>미국 친환경건축기술사 (LEED AP CC)</li>
+                        <li>前 희림종합건축사사무소 구조대수선 파트장</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <img src="il.png" alt="김규일" class="member-photo">
+            <div class="member-info">
+                <span class="member-tag">DESIGNER / AUTHOR</span>
+                <h3 class="member-name">김규일</h3>
+                <p class="member-desc">우리가 고민하는 지속가능한 건축을 디자인으로 녹여내고, 글로 전달합니다. 더불어 건축과 관련된 컨설팅도 진행합니다.</p>
+                <div class="member-details">
+                    <h4>BACKGROUND & CREDENTIALS</h4>
+                    <ul>
+                        <li>세종대학교 건축학과 학사 졸업</li>
+                        <li>미국 Harvard GSD 건축학 석사 (M.Arch II)</li>
+                        <li>건축 비평 잡지 '지속가능한 공간' 메인 필진</li>
+                        <li>前 정림건축 도시재생 컨설팅 자문위원</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="philosophy">
+    <p class="section-subtitle">Our Beliefs</p>
+    <h2 class="section-title">Philosophy</h2>
+    <div class="philo-intro">
+        건축은 시간과의 대화입니다. 
+        <span>We believe that the most innovative architecture is rooted in deep respect for what came before.</span>
+    </div>
+    <div class="philo-grid">
+        <div class="philo-box">
+            <h3>온고지신 溫故知新 <span>01</span></h3>
+            <p>과거 건축의 형태와 재료, 공간 지혜를 깊이 이해하고 현대 언어로 재해석합니다.</p>
+            <div class="en-sub">The old informs the new.</div>
+        </div>
+        <div class="philo-box">
+            <h3>지속가능성 Sustainability <span>02</span></h3>
+            <p>새로 짓는 것보다 고쳐 쓰는 것이 더 친환경적입니다.</p>
+            <div class="en-sub">Reuse is the most radical act of sustainability.</div>
+        </div>
+        <div class="philo-box">
+            <h3>커뮤니티 Community <span>03</span></h3>
+            <p>건축사사무소는 도면을 그리는 곳이기 이전에, 사람들이 모이는 장소여야 합니다.</p>
+            <div class="en-sub">Architecture is social infrastructure.</div>
+        </div>
+        <div class="philo-box">
+            <h3>미시적 탐구 Micro Scale <span>04</span></h3>
+            <p>디테일이 공간의 품격을 결정합니다.</p>
+            <div class="en-sub">The way light hits a threshold tells you everything about the architect.</div>
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <p class="section-subtitle">What We Do</p>
+    <h2 class="section-title">Services</h2>
+    <p style="font-size: 1.2rem; max-width: 800px; margin-bottom: 50px; color: var(--text-muted);">
+        건축사 면허가 필요한 리모델링·대수선부터 신축 설계, 인테리어 감리까지 통합적인 건축 솔루션을 제공합니다. <span style="color: var(--neon-color);">End-to-end architectural services.</span>
+    </p>
+    <div class="services-grid">
+        <div class="service-card">
+            <span class="service-num">01</span>
+            <div class="service-content">
+                <h3>리모델링 & 대수선</h3>
+                <p>기존 건물의 구조와 공간을 분석해 법적 요건을 충족하는 최적의 리모델링 솔루션 제시. 허가부터 준공까지 책임 진행.</p>
+            </div>
+            <div class="service-arrow"><i class="bi bi-arrow-right"></i></div>
+        </div>
+        <div class="service-card">
+            <span class="service-num">02</span>
+            <div class="service-content">
+                <h3>신축 설계 & 감리</h3>
+                <p>소규모 주거부터 근린생활시설까지. Passive design과 지속가능한 재료 조합으로 오래도록 사랑받을 공간을 설계.</p>
+            </div>
+            <div class="service-arrow"><i class="bi bi-arrow-right"></i></div>
+        </div>
+        <div class="service-card">
+            <span class="service-num">03</span>
+            <div class="service-content">
+                <h3>타당성 검토 & 컨설팅</h3>
+                <p>리모델링 전 단계의 Feasibility Study, 정밀 법규 검토, 공사 예산 분석을 통한 정확한 의사결정 데이터 제공.</p>
+            </div>
+            <div class="service-arrow"><i class="bi bi-arrow-right"></i></div>
+        </div>
+        <div class="service-card">
+            <span class="service-num">04</span>
+            <div class="service-content">
+                <h3>Sustainability Audit</h3>
+                <p>기존 노후 건물의 에너지 성능과 탄소 발자국을 정밀하게 측정하고, 친환경 개선 로드맵을 수치로 증명.</p>
+            </div>
+            <div class="service-arrow"><i class="bi bi-arrow-right"></i></div>
+        </div>
+    </div>
+    <div class="process-container">
+        <p class="section-subtitle" style="margin-bottom: 30px;">Architecture Work Process</p>
+        <div class="process-steps">
+            <div class="process-card">
+                <div class="process-step-num">ST 01</div>
+                <h4>기획 및 타당성 분석</h4>
+                <p>노후 건축물의 정밀 현장 실측, 구조적 한계 규명 및 법적 대수선 규제 가능 여부를 다각도로 검토함.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-step-num">ST 02</div>
+                <h4>기본 및 대수선 설계</h4>
+                <p>온고지신의 가치를 녹여낸 공간 레이아웃 기획 및 에너지 성능 최적화를 위한 자재 및 시스템 매핑 단계를 수행함.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-step-num">ST 03</div>
+                <h4>인허가 및 실시도면</h4>
+                <p>구청 대수선 허가/심의 절차를 전담하여 조율하고, 시공 오차를 미연에 방지할 미시적 디테일 실시 도면을 작성함.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-step-num">ST 04</div>
+                <h4>시공 감리 및 준공</h4>
+                <p>설계 의도가 시공 현장에 정밀하게 구현되는지 밀착 감리하고, 법적 사용승인 절차 완수를 통해 프로젝트를 마감함.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="works">
+    <p class="section-subtitle">Portfolio</p>
+    <h2 class="section-title">Selected <span>Work</span></h2>
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterWorks('all')">ALL</button>
+        <button class="filter-btn" onclick="filterWorks('remodeling')">REMODELING & REPAIR</button>
+        <button class="filter-btn" onclick="filterWorks('new')">NEW BUILD</button>
+        <button class="filter-btn" onclick="filterWorks('micro')">FURNITURE & OBJECT</button>
+    </div>
+    <div class="works-grid">
+        <div class="work-item" data-category="remodeling">
+            <div class="work-img-wrapper">
+                <img src="yeonhi.png" alt="연희동 옛 붉은벽돌집 대수선" class="work-img">
+            </div>
+            <div class="work-info">
+                <div class="work-meta">
+                    <h3>연희동 옛 붉은벽돌집 대수선</h3>
+                    <p>1980년대 연와조 주택을 현대적 개방형 근린생활시설로 구조 보강 및 리모델링 완수 (2023)</p>
+                </div>
+                <span class="work-cat">REMODELING</span>
+            </div>
+        </div>
+        <div class="work-item" data-category="remodeling">
+            <div class="work-img-wrapper">
+                <img src="seongsu.png" alt="성수동 올드 팩토리 허브" class="work-img">
+            </div>
+            <div class="work-info">
+                <div class="work-meta">
+                    <h3>성수동 올드 팩토리 허브</h3>
+                    <p>폐공장의 철골 트러스를 그대로 노출하고 지속가능한 탄소 저감 단열공법을 적용한 업무공간 재생 (2024)</p>
+                </div>
+                <span class="work-cat">REMODELING</span>
+            </div>
+        </div>
+        <div class="work-item" data-category="new">
+            <div class="work-img-wrapper">
+                <img src="hannam.png" alt="한남동 미시적 인필 하우스" class="work-img">
+            </div>
+            <div class="work-info">
+                <div class="work-meta">
+                    <h3>한남동 미시적 인필 하우스 (Infill House)</h3>
+                    <p>도시 틈새 자투리 땅을 활용한 소규모 패시브 저탄소 주거 신축 설계 프로젝트 (2022)</p>
+                </div>
+                <span class="work-cat">NEW BUILD</span>
+            </div>
+        </div>
+        <div class="work-item" data-category="micro">
+            <div class="work-img-wrapper">
+                <img src="table.png" alt="모듈러 구조 목재 테이블 시리즈" class="work-img">
+            </div>
+            <div class="work-info">
+                <div class="work-meta">
+                    <h3>모듈러 구조 목재 테이블 시리즈</h3>
+                    <p>대수선 현장 폐자재 아웃풋을 고부가가치 업사이클링 내장재 및 가구로 재해석한 디테일 디자인 (2023)</p>
+                </div>
+                <span class="work-cat">FURNITURE & OBJECT</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="space">
+    <p class="section-subtitle">Physical Platform</p>
+    <h2 class="section-title">Our <span>Space</span></h2>
+    <div class="space-wrapper">
+        <div class="section-diagram">
+            <div class="diagram-floor">
+                <span class="floor-tag">2F</span>
+                <div class="floor-title">ONGO ARCHITECTURE STUDIO</div>
+                <div class="floor-desc">본격적인 도면 설계, 기술 법규 검토, 대수선 엔지니어링 연구가 고밀도로 일어나는 핵심 사옥 업무 공간임.</div>
+            </div>
+            <div class="diagram-floor" style="border-color: var(--neon-color); background-color: rgba(204, 255, 0, 0.03);">
+                <span class="floor-tag">1F</span>
+                <div class="floor-title">ONGO CAFE, BOOKSTORE & STORE</div>
+                <div class="floor-desc">바리스타 김수겸의 에스프레소 바, 직접 저술한 서적과 엄선된 건축 총서 서점, 자체 디자인 굿즈를 오프라인 판매하는 열린 커뮤니티 공간임.</div>
+            </div>
+            <div class="diagram-floor">
+                <span class="floor-tag">B1</span>
+                <div class="floor-title">UNDERGROUND WORKSHOP HALL</div>
+                <div class="floor-desc">지역 주민, 예비 건축주들과 지속가능한 주거 개선을 논하는 토크쇼 및 실무 재생 워크숍 플랫폼 공간임.</div>
+            </div>
+        </div>
+        <div class="space-image-side">
+            <img src="space.png" alt="Studio Ongo Section" class="space-image">
+        </div>
+    </div>
+</section>
+
+<section id="history">
+    <p class="section-subtitle">Our Journey</p>
+    <h2 class="section-title">Chronicle</h2>
+    <div class="history-timeline">
+        <div class="history-row">
+            <div class="history-year">2025</div>
+            <div class="history-marker"></div>
+            <div class="history-content">
+                <div class="history-item">
+                    <span class="month">07</span>
+                    <span class="text">서울시 도시재생 리모델링 부문 우수 건축사사무소 표창</span>
+                </div>
+                <div class="history-item">
+                    <span class="month">02</span>
+                    <span class="text">Sustainability Audit 탄소발자국 추적 프로그램 정식 도입 운영</span>
+                </div>
+            </div>
+        </div>
+        <div class="history-row">
+            <div class="history-year">2024</div>
+            <div class="history-marker"></div>
+            <div class="history-content">
+                <div class="history-item">
+                    <span class="month">10</span>
+                    <span class="text">ONGO 가구 및 공간 오브젝트 독립 라인업 런칭 및 매장 입점</span>
+                </div>
+                <div class="history-item">
+                    <span class="month">04</span>
+                    <span class="text">성수동 팩토리 재생 프로젝트로 한국리모델링건축대전 특선 수상</span>
+                </div>
+            </div>
+        </div>
+        <div class="history-row">
+            <div class="history-year">2023</div>
+            <div class="history-marker"></div>
+            <div class="history-content">
+                <div class="history-item">
+                    <span class="month">08</span>
+                    <span class="text">자체 건축 서적 브랜드 'ARCHI-LOG' 초판 발행 및 문화 공간 연계</span>
+                </div>
+                <div class="history-item">
+                    <span class="month">01</span>
+                    <span class="text">연희동 단독주택 대수선 프로젝트 준공 및 미디어 스포트라이트</span>
+                </div>
+            </div>
+        </div>
+        <div class="history-row">
+            <div class="history-year">2022</div>
+            <div class="history-marker"></div>
+            <div class="history-content">
+                <div class="history-item">
+                    <span class="month">09</span>
+                    <span class="text">사옥 브랜드 플랫폼 '온고 그라운드(1F 카페/북스토어, B1 홀) 개관</span>
+                </div>
+            </div>
+        </div>
+        <div class="history-row">
+            <div class="history-year">2021</div>
+            <div class="history-marker"></div>
+            <div class="history-content">
+                <div class="history-item">
+                    <span class="month">03</span>
+                    <span class="text">세종대학교 동문 3인 기반 건축사사무소 STUDIO ONGO 법인 창립</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="video">
+    <p class="section-subtitle">Brand Film</p>
+    <h2 class="section-title">Media <span>Archive</span></h2>
+    <div class="video-container">
+        <video controls autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;">
+            <source src="video.mp4" type="video/mp4">
+            브라우저가 영상을 지원하지 않습니다.
+        </video>
+    </div>
+</section>
+
+<section id="store">
+    <p class="section-subtitle">Selected Merchandises</p>
+    <h2 class="section-title">Online <span>Store</span></h2>
+    <div class="store-grid">
+        <div class="product-card">
+            <div class="product-img">
+                <img src="book.png" class="store-img">
+            </div>
+            <div class="product-info">
+                <span class="product-cat">PUBLICATION</span>
+                <h3 class="product-title">ARCHI-LOG: 고쳐 쓰는 집의 기록</h3>
+                <div class="product-price">₩18,000</div>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-img">
+                <img src="table2.png" class="store-img">
+            </div>
+            <div class="product-info">
+                <span class="product-cat">FURNITURE</span>
+                <h3 class="product-title">ONGO 정밀 원목 모듈 가구 테이블</h3>
+                <div class="product-price">₩450,000</div>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-img">
+                <img src="ruler.png" class="store-img">
+            </div>
+            <div class="product-info">
+                <span class="product-cat">OFFICE GOODS</span>
+                <h3 class="product-title">Studio Ongo 아키텍트 황동 스케일 자 세트</h3>
+                <div class="product-price">₩32,000</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="online">
+    <p class="section-subtitle">Social Communication</p>
+    <h2 class="section-title">Online <span>Channels</span></h2>
+    <div class="online-grid">
+        <div class="online-box">
+            <div class="online-header">
+                <i class="bi bi-youtube" style="color: #ff0000;"></i>
+                <span class="platform-tag">YOUTUBE</span>
+            </div>
+            <h3>[진행중] "고쳐 쓰는 집의 가치" 라이브 스트리밍</h3>
+            <p>정기적으로 리모델링 노후 건물 법규 검토 및 구조 보강 현장의 비하인드 스토리를 투명하게 방송하며 소통하고 있습니다.</p>
+            <a href="#" class="online-link">채널 바로가기 <i class="bi bi-arrow-up-right"></i></a>
+        </div>
+        <div class="online-box">
+            <div class="online-header">
+                <i class="bi bi-instagram" style="color: #e1306c;"></i>
+                <span class="platform-tag">INSTAGRAM</span>
+            </div>
+            <h3>@studio_ongo_official 데일리 아카이브</h3>
+            <p>미시적 디테일 리서치 과정, 자재 실험 현장, 1층 오프라인 북스토어 입고 소식 등 젊고 감각적인 일상을 큐레이션하여 공유함.</p>
+            <a href="#" class="online-link">피드 팔로우하기 <i class="bi bi-arrow-up-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="contact-wrapper">
+        <div class="contact-info-side">
+            <p class="section-subtitle">Get In Touch</p>
+            <h2>CONTACT <span>US</span></h2>
+            <p style="color: var(--text-muted); font-size: 1.05rem; word-break: keep-all; margin-bottom: 30px;">
+                프로젝트 타당성 분석 의뢰, 대수선 및 리모델링 설계 상담 등 협업 제안은 언제나 환영받음.
+            </p>
+            <div class="contact-details">
+                <div class="contact-row">
+                    <i class="bi bi-geo-alt"></i>
+                    <div>
+                        <span>OFFICE LOCATION</span>
+                        <p>서울특별시 광진구 능동로 (온고그라운드 빌딩 1-2F)</p>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <i class="bi bi-envelope"></i>
+                    <div>
+                        <span>EMAIL ADDRESS</span>
+                        <p>project@studio-ongo.com</p>
+                    </div>
+                </div>
+                <div class="contact-row">
+                    <i class="bi bi-telephone"></i>
+                    <div>
+                        <span>TELEPHONE PHONE</span>
+                        <p>02-450-XXXX</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contact-form-side">
+            <form onsubmit="event.preventDefault(); alert('상담 신청 문서 접수 시뮬레이션이 정상 가동됨.');">
+                <div class="form-group">
+                    <label>PROJECT TYPE</label>
+                    <select class="form-control" style="background-color: #1a1a1a;">
+                        <option>리모델링 & 대수선 (Remodeling & Repair)</option>
+                        <option>신축 설계 및 감리 (New Build)</option>
+                        <option>Feasibility Study & 컨설팅</option>
+                        <option>기타 오브젝트 브랜드 협업</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>NAME / COMPANY</label>
+                    <input type="text" class="form-control" placeholder="성함 혹은 사명을 입력하세요.">
+                </div>
+                <div class="form-group">
+                    <label>EMAIL ADDRESS</label>
+                    <input type="email" class="form-control" placeholder="회신받으실 이메일 주소를 입력하세요.">
+                </div>
+                <div class="form-group">
+                    <label>MESSAGE</label>
+                    <textarea class="form-control" placeholder="건축물의 규모, 위치, 대수선 희망 내용 등 세부 사항을 기재하세요."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">SEND REQUEST</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-logo">STUDIO ONGO</div>
+    <div>&copy; 2026 STUDIO ONGO. All Rights Reserved.</div>
+</footer>
+
+<script>
+    function filterWorks(category) {
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const items = document.querySelectorAll('.work-item');
+        items.forEach(item => {
+            if (category === 'all' || item.getAttribute('data-category') === category) {
+                item.style.display = 'block';
+                setTimeout(() => { item.style.opacity = '1'; }, 50);
+            } else {
+                item.style.opacity = '0';
+                setTimeout(() => { item.style.display = 'none'; }, 300);
+            }
+        });
+    }
+</script>
+</body>
+</html>
